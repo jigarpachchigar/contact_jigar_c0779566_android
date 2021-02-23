@@ -26,6 +26,9 @@ public class MainActivity  extends AppCompatActivity implements View.OnClickList
 
     ArrayList<String> number;
 
+    AlertDialog.Builder builder;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -39,6 +42,8 @@ public class MainActivity  extends AppCompatActivity implements View.OnClickList
         edtemail = findViewById(R.id.edtEmail);
         tvmsg =  findViewById(R.id.tvDisplay);
         btnshow = findViewById(R.id.btnDisplay);
+        builder = new AlertDialog.Builder(this);
+
 
         findViewById(R.id.btnAddcontact).setOnClickListener(this);
         findViewById(R.id.tvDisplay).setOnClickListener(this);
@@ -148,29 +153,15 @@ public class MainActivity  extends AppCompatActivity implements View.OnClickList
             }
         }
 
-
         if (!isCheck){
 
             if (mDatabase.addUserContact(fName,lName,mPhone,mAddress,mEmail)){
-                Toast.makeText(MainActivity.this, "New Contact Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"New Contact Saved",Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Confirm Exit..!!!");
-                alertDialogBuilder.setMessage("Contact Added Suceesfully !");
-                alertDialogBuilder.setCancelable(false);
-
-                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        finish();
-                    }
-                });
-
-                tvmsg.setText("Total Contacts :"+loadData());
+                tvmsg.setText("Total Contacts : "+loadData());
 
             }else {
-                Toast.makeText(MainActivity.this, "New Contact Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Contact Not Saved", Toast.LENGTH_LONG).show();
             }
         }else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
